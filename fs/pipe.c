@@ -400,7 +400,8 @@ pipe_read(struct kiocb *iocb, const struct iovec *_iov,
 			const struct pipe_buf_operations *ops = buf->ops;
 			void *addr;
 			size_t chars = buf->len, remaining;
-			int error, atomic, offset;
+			int error, atomic;
+			int offset;
 
 			if (chars > total_len)
 				chars = total_len;
@@ -414,7 +415,7 @@ pipe_read(struct kiocb *iocb, const struct iovec *_iov,
 
 			atomic = !iov_fault_in_pages_write(iov, chars);
 			remaining = chars;
-                        offset = buf->offset;
+			offset = buf->offset;
 redo:
 			addr = ops->map(pipe, buf, atomic);
 			error = pipe_iov_copy_to_user(iov, addr, &offset,
