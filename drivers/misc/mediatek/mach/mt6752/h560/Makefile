@@ -11,7 +11,7 @@ endif
 # obj-y	+=  camera/camera/
 # End of Vanzo: songlixin
 
-#obj-y   +=  flashlight/constant_flashlight/
+obj-y   +=  flashlight/constant_flashlight/
 obj-y   +=  vibrator/
 obj-y   +=  leds/
 obj-y   +=  keypad/

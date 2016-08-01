@@ -37,7 +37,7 @@
 #include "synaptics_dsx_i2c.h"
 #include "synaptics_dsx.h"
 #include "tpd_custom_synaptics.h"
-
+#define VANZO_TOUCHPANEL_GESTURES_SUPPORT 
 #ifdef VANZO_TOUCHPANEL_GESTURES_SUPPORT
 static bool _is_enter_gestures_mode = false;
 static int _is_gestures_wakup_enable = 0;
@@ -478,11 +478,9 @@ static struct device_attribute attrs[] = {
     __ATTR(suspend, S_IWUGO,
             synaptics_rmi4_show_error,
             synaptics_rmi4_suspend_store),
-#if 0 //def VANZO_TOUCHPANEL_GESTURES_SUPPORT
     __ATTR(gesture, (S_IWUGO| S_IRUGO),
             gtp_gesture_wakeup_show,
             gtp_gesture_wakeup_store),
-#endif
 };
 
 #ifdef CONFIG_HAS_EARLYSUSPEND

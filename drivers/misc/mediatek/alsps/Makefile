@@ -58,6 +58,10 @@ endif
 ifeq ($(CONFIG_MTK_RPR410),y)
 obj-y	+=  rpr410/
 endif
+
+ifeq ($(CONFIG_MTK_TMG399X_NEW),y)
+obj-y	+=  tmg399x-new/
+endif
 # Vanzo:wangfei on: Tue, 06 Jan 2015 10:34:15 +0800
 # added for new structure config alsps
 endif

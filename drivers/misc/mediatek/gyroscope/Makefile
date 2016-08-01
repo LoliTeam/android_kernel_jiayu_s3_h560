@@ -54,6 +54,10 @@ endif
 ifeq ($(CONFIG_MTK_LSM6DS3),y)
 obj-y   +=  lsm6ds3gy/
 endif
+
+ifeq ($(CONFIG_MTK_LSM6DS0_NEW),y)
+obj-y   +=  lsm6ds0-new/
+endif
 # Vanzo:wangfei on: Tue, 06 Jan 2015 10:34:15 +0800
 # added for new structure config alsps
 endif

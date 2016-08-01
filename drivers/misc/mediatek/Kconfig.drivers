@@ -949,6 +949,9 @@ config MTK_APDS9930_NEW
 	bool "APDS9930_NEW for MediaTek package"
 	default n
 
+config MTK_TMG399X_NEW
+	bool "CM3232 for MediaTek package"
+	default n
 # Accelerometer sensor
 config MTK_KXTJ2_1009
 	bool "KXTJ2 1009 for MediaTek package"
@@ -1011,6 +1014,10 @@ config MTK_LSM6DS3
 	
 config MTK_MXC400X_NEW
 	bool "MXC400X for MediaTek package"
+	default n
+
+config MTK_LSM6DS0_ACC_NEW
+	bool "LSM6DS0_ACC for MediaTek package"
 	default n	
 # Gyro sensor
 config MTK_MPU3050C
@@ -1046,6 +1053,10 @@ config MTK_MPU3050C_NEW
 
 config MTK_MPU6050C
         bool "MPU6050C for MediaTek package"
+        default n
+
+config MTK_LSM6DS0_NEW
+        bool "LSM6DS0 for MediaTek package"
         default n
         
 # Magnet sensor
@@ -1127,6 +1138,10 @@ config MTK_IST8303
 			 
 config MTK_ST480
 	bool "ST480 for MediaTek package"
+	default n
+
+config MTK_QMC6983_NEW
+	bool "QMC6983 for MediaTek package"
 	default n
 	
 # Barometer sensor

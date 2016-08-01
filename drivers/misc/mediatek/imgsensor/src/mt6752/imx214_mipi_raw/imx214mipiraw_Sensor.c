@@ -2357,10 +2357,7 @@ static kal_uint32 open(void)
 	
 	/* initail sequence write in  */
 	sensor_init();
-    if(0 == strncmp(VANZO_MAIN_CAM_ROTATION, "180", 3))
-    {
-      set_mirror_flip(IMAGE_NORMAL);
-    }
+    
 	spin_lock(&imgsensor_drv_lock);
 
 	imgsensor.autoflicker_en= KAL_FALSE;

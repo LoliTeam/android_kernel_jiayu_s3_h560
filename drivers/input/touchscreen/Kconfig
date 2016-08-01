@@ -1021,5 +1021,11 @@ config TOUCHSCREEN_SYNAPTICS
 	depends on I2C
 	help
 	  This enables support for Synaptics over I2C based touchscreens.
+
+config TOUCHSCREEN_SYNAPTICS_C
+	tristate "Synaptics C touchscreen"
+	depends on I2C
+	help
+	  This enables support for Synaptics over I2C based touchscreens.
 	  
 endif

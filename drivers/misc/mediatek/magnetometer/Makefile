@@ -59,6 +59,10 @@ endif
 ifeq ($(CONFIG_MTK_ST480),y)
 obj-y   +=  st480/
 endif
+
+ifeq ($(CONFIG_MTK_QMC6983_NEW),y)
+obj-y	+=  qmc6983-new/
+endif
 # Vanzo:wangfei on: Tue, 06 Jan 2015 10:34:15 +0800
 # added for new structure config alsps
 endif

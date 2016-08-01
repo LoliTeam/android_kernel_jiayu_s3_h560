@@ -88,6 +88,10 @@ endif
 ifeq ($(CONFIG_MTK_MXC400X_NEW),y)
 obj-y   +=  mxc400x-new/
 endif
+
+ifeq ($(CONFIG_MTK_LSM6DS0_ACC_NEW),y)
+obj-y   +=  lsm6ds0_acc-new/
+endif
 # Vanzo:wangfei on: Tue, 06 Jan 2015 10:34:15 +0800
 # added for new structure config alsps
 endif
