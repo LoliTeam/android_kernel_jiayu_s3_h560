@@ -10,7 +10,7 @@ CONFIG_MALI_PLATFORM_THIRDPARTY_NAME := vexpress
 CONFIG_MALI_PLATFORM_FAKE := y
 
 CONFIG_MALI_PLATFORM_VEXPRESS := y
-CONFIG_MALI_DEBUG := y
+CONFIG_MALI_DEBUG := n
 
 ccflags-y += -DCONFIG_MALI_PLATFORM_FAKE
 ccflags-y += -DCONFIG_MALI_MIDGARD_DVFS
@@ -31,11 +31,11 @@ VER:=user
 endif
 endif
 
-ccflags-y += -DCONFIG_DEBUG_FS
+#ccflags-y += -DCONFIG_DEBUG_FS
 ccflags-y += -DCONFIG_PROC_FS
 
-ifeq ($(VER),eng)
-ccflags-y += -DCONFIG_MALI_DEBUG
-else
-ccflags-y += -UCONFIG_MALI_DEBUG
-endif
+#ifeq ($(VER),eng)
+#ccflags-y += -DCONFIG_MALI_DEBUG
+#else
+#ccflags-y += -UCONFIG_MALI_DEBUG
+#endif
