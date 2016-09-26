@@ -347,6 +347,7 @@ static unsigned int _mt_cpufreq_get_cpu_level(void)
                 lv = CPU_LEVEL_0;   // 2.0G
 #else    /* CONFIG_CPU_OC */
                 lv = CPU_LEVEL_1;   // 1.7G
+#endif
                 break;
             case 5:
             case 6:
