@@ -336,12 +336,6 @@ CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
 # CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set
 # CONFIG_CPU_FREQ_GOV_HOTPLUG is not set
 
-# Overclock
-#
-CONFIG_CPU_OC=y
-CONFIG_GPU_OC=y
-CONFIG_MORE_FREQ=y
-
 #
 # ARM CPU frequency scaling drivers
 #

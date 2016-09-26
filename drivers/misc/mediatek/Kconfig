@@ -480,6 +480,5 @@ source "drivers/misc/mediatek/emi_bwl/Kconfig"
 source "drivers/misc/mediatek/dbg_dump/Kconfig"
 source "drivers/misc/mediatek/connectivity/Kconfig"
 source "drivers/misc/mediatek/gps/Kconfig"
-source "drivers/misc/mediatek/mach/mt6752/Kconfig"
 
 endif
