@@ -293,7 +293,6 @@ static int dk_init(struct dbs_data *dbs_data)
 
 static void dk_exit(struct dbs_data *dbs_data)
 {
-	struct dk_dbs_tuners *cached_tuners = &per_cpu(dk_cached_tuners, dbs_data->cpu);
 	struct dk_dbs_tuners *tuners = dbs_data->tuners;
 
 	if (tuners) {
@@ -307,7 +306,7 @@ static void dk_exit(struct dbs_data *dbs_data)
 
 define_get_cpu_dbs_routines(dk_cpu_dbs_info);
 
-static struct common_dbs_data dk_dbs_cdata = {
+static struct common_dbs_data cs_dbs_cdata = {
 	.governor = GOV_DARKNESS,
 	.attr_group_gov_sys = &dk_attr_group_gov_sys,
 	.attr_group_gov_pol = &dk_attr_group_gov_pol,
