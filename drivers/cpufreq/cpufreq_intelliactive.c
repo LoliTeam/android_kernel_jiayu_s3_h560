@@ -1437,8 +1437,6 @@ static int __init cpufreq_intelliactive_init(void)
 		init_rwsem(&pcpu->enable_sem);
 	}
 
-	register_power_suspend(&intelliactive_suspend);
-
 	spin_lock_init(&target_loads_lock);
 	spin_lock_init(&speedchange_cpumask_lock);
 	spin_lock_init(&above_hispeed_delay_lock);
