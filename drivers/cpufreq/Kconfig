@@ -359,25 +359,12 @@ config CPU_FREQ_GOV_PEGASUSQ
 	tristate "'pegasusq' cpufreq policy governor"
 
 config CPU_FREQ_DEFAULT_GOV_DARKNESS
-	bool "darkness"
 	select CPU_FREQ_GOV_DARKNESS
 	help
 
 config CPU_FREQ_DEFAULT_GOV_ALUCARD
-	bool "alucard"
 	select CPU_FREQ_GOV_ALUCARD
 	help
-
-config GENERIC_CPUFREQ_CPU0
-	tristate "Generic CPU0 cpufreq driver"
-	depends on HAVE_CLK && REGULATOR && PM_OPP && OF
-	select CPU_FREQ_TABLE
-	help
-	  This adds a generic cpufreq driver for CPU0 frequency management.
-	  It supports both uniprocessor (UP) and symmetric multiprocessor (SMP)
-	  systems which share clock and voltage across all CPUs.
-
-	  If in doubt, say N.
 
 config CPU_FREQ_GOV_INTELLIACTIVE
 	tristate "'intelliactive' cpufreq policy governor"
@@ -393,11 +380,21 @@ config CPU_FREQ_GOV_INTELLIACTIVE
 	  If in doubt, say N.
 
 config CPU_FREQ_GOV_INTELLIMM
-        bool "intelliminmax"
         select CPU_FREQ_GOV_INTELLIMM
         help
           Use the CPUFreq governor 'intelliminmax' as default. This is
 	  governor will use only 3 different frequencies, idle, UI and max
+
+config GENERIC_CPUFREQ_CPU0
+	tristate "Generic CPU0 cpufreq driver"
+	depends on HAVE_CLK && REGULATOR && PM_OPP && OF
+	select CPU_FREQ_TABLE
+	help
+	  This adds a generic cpufreq driver for CPU0 frequency management.
+	  It supports both uniprocessor (UP) and symmetric multiprocessor (SMP)
+	  systems which share clock and voltage across all CPUs.
+
+	  If in doubt, say N.
 
 menu "x86 CPU frequency scaling drivers"
 depends on X86
