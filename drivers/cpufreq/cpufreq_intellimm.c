@@ -1190,11 +1190,6 @@ static int cpufreq_gov_dbs_up_task(void *data)
 
 		get_online_cpus();
 
-		if (lock_policy_rwsem_write(cpu) < 0)
-			goto bail_acq_sema_failed;
-
-		this_dbs_info = &per_cpu(imm_cpu_dbs_info, cpu);
-		policy = this_dbs_info->cur_policy;
 		if (!policy) {
 			
 			goto bail_incorrect_governor;
@@ -1211,7 +1206,6 @@ static int cpufreq_gov_dbs_up_task(void *data)
 		mutex_unlock(&this_dbs_info->timer_mutex);
 
 bail_incorrect_governor:
-		unlock_policy_rwsem_write(cpu);
 
 bail_acq_sema_failed:
 		put_online_cpus();
