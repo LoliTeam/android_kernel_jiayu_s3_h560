@@ -180,11 +180,6 @@ config CPU_FREQ_DEFAULT_GOV_INTELLIMM
           Use the CPUFreq governor 'intelliminmax' as default. This is
           governor will use only 3 different frequencies, idle, UI and max
 
-config CPU_FREQ_DEFAULT_GOV_DARKNESS
-	bool "darkness"
-	select CPU_FREQ_GOV_DARKNESS
-	help
-
 config CPU_FREQ_DEFAULT_GOV_ALUCARD
 	bool "alucard"
 	select CPU_FREQ_GOV_ALUCARD
@@ -357,12 +352,6 @@ config CPU_FREQ_GOV_HOTPLUG
 
 config CPU_FREQ_GOV_PEGASUSQ
 	tristate "'pegasusq' cpufreq policy governor"
-
-config CPU_FREQ_GOV_DARKNESS
-	tristate "'darkness' cpufreq governor"
-	depends on CPU_FREQ
-	select CPU_FREQ_GOV_COMMON
-	help
 
 config CPU_FREQ_GOV_ALUCARD
 	tristate "'alucard' cpufreq governor"
