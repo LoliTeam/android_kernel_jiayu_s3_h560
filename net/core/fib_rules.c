@@ -652,10 +652,9 @@ static int dump_rules(struct sk_buff *skb, struct netlink_callback *cb,
 		if (idx < cb->args[1])
 			goto skip;
 
-		err = fib_nl_fill_rule(skb, rule, NETLINK_CB(cb->skb).portid,
-				       cb->nlh->nlmsg_seq, RTM_NEWRULE,
-				       NLM_F_MULTI, ops);
-		if (err < 0)
+		if (fib_nl_fill_rule(skb, rule, NETLINK_CB(cb->skb).portid,
+				     cb->nlh->nlmsg_seq, RTM_NEWRULE,
+				     NLM_F_MULTI, ops) < 0)
 			break;
 skip:
 		idx++;
