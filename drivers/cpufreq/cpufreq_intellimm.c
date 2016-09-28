@@ -75,8 +75,6 @@ static unsigned int min_sampling_rate;
 #define POWERSAVE_BIAS_MINLEVEL			(-1000)
 
 static void do_dbs_timer(struct work_struct *work);
-static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
-				unsigned int event);
 
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_INTELLIMM
 static
