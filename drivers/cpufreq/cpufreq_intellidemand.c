@@ -2100,8 +2100,6 @@ void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
 	input_event_min_freq_array[cpu_nr-1] = cpufreq;
 }
 
-static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
-				   unsigned int event)
 {
 	unsigned int cpu = policy->cpu;
 	struct cpu_dbs_info_s *this_dbs_info;
