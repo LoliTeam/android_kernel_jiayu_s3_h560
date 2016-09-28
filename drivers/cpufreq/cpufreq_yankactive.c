@@ -23,6 +23,7 @@
 #include <linux/moduleparam.h>
 #include <linux/rwsem.h>
 #include <linux/sched.h>
+#include <linux/sched/rt.h>
 #include <linux/tick.h>
 #include <linux/time.h>
 #include <linux/timer.h>
@@ -31,6 +32,8 @@
 #include <linux/slab.h>
 #include <linux/kernel_stat.h>
 #include <asm/cputime.h>
+
+#include "cpufreq_governor.h"
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/cpufreq_yankactive.h>
