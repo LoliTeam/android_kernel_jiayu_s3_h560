@@ -131,7 +131,7 @@ config CPU_FREQ_DEFAULT_GOV_YANKACTIVE
 	  Use the CPUFreq governor 'yankactive' as default. This allows
 	  you to get a full dynamic cpu frequency capable system by simply
 	  loading your cpufreq low-level hardware driver, using the
-      'yankactive' governor for latency-sensitive workloads.
+	  'yankactive' governor for latency-sensitive workloads.
 
 config CPU_FREQ_DEFAULT_GOV_BALANCE
 	bool "balance"
@@ -283,7 +283,7 @@ config CPU_FREQ_GOV_YANKACTIVE
 
 	  The governor is based on interactive with just different default settings
 	  and can be achieved using interactive with a script. This is added for
-      simplification purposes for myself.	  
+	  simplification purposes for myself.	  
 	  
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
