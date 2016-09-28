@@ -1191,7 +1191,6 @@ static void do_dbs_timer(struct work_struct *work)
 	dbs_info->sample_type = DBS_NORMAL_SAMPLE;
 	if (!dbs_tuners_ins.powersave_bias ||
 	    sample_type == DBS_NORMAL_SAMPLE) {
-		dbs_check_cpu(dbs_info);
 		if (dbs_info->freq_lo) {
 			
 			dbs_info->sample_type = DBS_SUB_SAMPLE;
