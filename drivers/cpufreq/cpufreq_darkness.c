@@ -23,18 +23,18 @@
 #define DEF_SAMPLING_RATE			(20000)
 #define MIN_SAMPLING_RATE			(10000)
 
-static DEFINE_PER_CPU(struct cs_cpu_dbs_info_s, cs_cpu_dbs_info);
-static DEFINE_PER_CPU(struct cs_dbs_tuners, cs_cached_tuners);
+static DEFINE_PER_CPU(struct dk_cpu_dbs_info_s, dk_cpu_dbs_info);
+static DEFINE_PER_CPU(struct dk_dbs_tuners, dk_cached_tuners);
 
-static struct cs_ops cs_ops;
+static struct dk_ops dk_ops;
 
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_DARKNESS
 static struct cpufreq_governor cpufreq_gov_darkness;
 #endif
 
-static void cs_get_cpu_frequency_table(int cpu)
+static void dk_get_cpu_frequency_table(int cpu)
 {
-	struct cs_cpu_dbs_info_s *dbs_info = &per_cpu(cs_cpu_dbs_info, cpu);
+	struct dk_cpu_dbs_info_s *dbs_info = &per_cpu(dk_cpu_dbs_info, cpu);
 
 	dbs_info->freq_table = cpufreq_frequency_get_table(cpu);
 }
@@ -77,9 +77,9 @@ static unsigned int adjust_cpufreq_frequency_target(struct cpufreq_policy *polic
 	return target_freq;
 }
 
-static void cs_check_cpu(int cpu, unsigned int load)
+static void dk_check_cpu(int cpu, unsigned int load)
 {
-	struct cs_cpu_dbs_info_s *dbs_info = &per_cpu(cs_cpu_dbs_info, cpu);
+	struct dk_cpu_dbs_info_s *dbs_info = &per_cpu(dk_cpu_dbs_info, cpu);
 	struct cpufreq_policy *policy = dbs_info->cdbs.cur_policy;
 	unsigned int next_freq = 0;
 
@@ -93,20 +93,20 @@ static void cs_check_cpu(int cpu, unsigned int load)
 
 }
 
-static void cs_dbs_timer(struct work_struct *work)
+static void dk_dbs_timer(struct work_struct *work)
 {
-	struct cs_cpu_dbs_info_s *dbs_info = container_of(work,
-			struct cs_cpu_dbs_info_s, cdbs.work.work);
+	struct dk_cpu_dbs_info_s *dbs_info = container_of(work,
+			struct dk_cpu_dbs_info_s, cdbs.work.work);
 	unsigned int cpu = dbs_info->cdbs.cur_policy->cpu;
-	struct cs_cpu_dbs_info_s *core_dbs_info = &per_cpu(cs_cpu_dbs_info,
+	struct dk_cpu_dbs_info_s *core_dbs_info = &per_cpu(dk_cpu_dbs_info,
 			cpu);
 	struct dbs_data *dbs_data = dbs_info->cdbs.cur_policy->governor_data;
-	struct cs_dbs_tuners *cs_tuners = dbs_data->tuners;
-	int delay = delay_for_sampling_rate(cs_tuners->sampling_rate);
+	struct dk_dbs_tuners *dk_tuners = dbs_data->tuners;
+	int delay = delay_for_sampling_rate(dk_tuners->sampling_rate);
 	bool modify_all = true;
 
 	mutex_lock(&core_dbs_info->cdbs.timer_mutex);
-	if (!need_load_eval(&core_dbs_info->cdbs, cs_tuners->sampling_rate))
+	if (!need_load_eval(&core_dbs_info->cdbs, dk_tuners->sampling_rate))
 		modify_all = false;
 	else
 		dbs_check_cpu(dbs_data, cpu);
@@ -116,7 +116,7 @@ static void cs_dbs_timer(struct work_struct *work)
 }
 
 /************************** sysfs interface ************************/
-static struct common_dbs_data cs_dbs_cdata;
+static struct common_dbs_data dk_dbs_cdata;
 
 /**
  * update_sampling_rate - update sampling rate effective immediately if needed.
@@ -134,16 +134,16 @@ static struct common_dbs_data cs_dbs_cdata;
 static void update_sampling_rate(struct dbs_data *dbs_data,
 		unsigned int new_rate)
 {
-	struct cs_dbs_tuners *cs_tuners = dbs_data->tuners;
+	struct dk_dbs_tuners *dk_tuners = dbs_data->tuners;
 	int cpu;
 
-	cs_tuners->sampling_rate = new_rate = max(new_rate,
+	dk_tuners->sampling_rate = new_rate = max(new_rate,
 			dbs_data->min_sampling_rate);
 
 	get_online_cpus();
 	for_each_online_cpu(cpu) {
 		struct cpufreq_policy *policy;
-		struct cs_cpu_dbs_info_s *dbs_info;
+		struct dk_cpu_dbs_info_s *dbs_info;
 		unsigned long next_sampling, appointed_at;
 
 		policy = cpufreq_cpu_get(cpu);
@@ -153,7 +153,7 @@ static void update_sampling_rate(struct dbs_data *dbs_data,
 			cpufreq_cpu_put(policy);
 			continue;
 		}
-		dbs_info = &per_cpu(cs_cpu_dbs_info, cpu);
+		dbs_info = &per_cpu(dk_cpu_dbs_info, cpu);
 		cpufreq_cpu_put(policy);
 
 		mutex_lock(&dbs_info->cdbs.timer_mutex);
@@ -203,7 +203,7 @@ static ssize_t store_sampling_rate(struct dbs_data *dbs_data, const char *buf,
 static ssize_t store_ignore_nice_load(struct dbs_data *dbs_data,
 		const char *buf, size_t count)
 {
-	struct cs_dbs_tuners *cs_tuners = dbs_data->tuners;
+	struct dk_dbs_tuners *dk_tuners = dbs_data->tuners;
 	unsigned int input, j;
 	int ret;
 
@@ -214,27 +214,27 @@ static ssize_t store_ignore_nice_load(struct dbs_data *dbs_data,
 	if (input > 1)
 		input = 1;
 
-	if (input == cs_tuners->ignore_nice_load) /* nothing to do */
+	if (input == dk_tuners->ignore_nice_load) /* nothing to do */
 		return count;
 
-	cs_tuners->ignore_nice_load = input;
+	dk_tuners->ignore_nice_load = input;
 
 	/* we need to re-evaluate prev_cpu_idle */
 	for_each_online_cpu(j) {
-		struct cs_cpu_dbs_info_s *dbs_info;
-		dbs_info = &per_cpu(cs_cpu_dbs_info, j);
+		struct dk_cpu_dbs_info_s *dbs_info;
+		dbs_info = &per_cpu(dk_cpu_dbs_info, j);
 		dbs_info->cdbs.prev_cpu_idle = get_cpu_idle_time(j,
 					&dbs_info->cdbs.prev_cpu_wall, 0);
-		if (cs_tuners->ignore_nice_load)
+		if (dk_tuners->ignore_nice_load)
 			dbs_info->cdbs.prev_cpu_nice =
 				kcpustat_cpu(j).cpustat[CPUTIME_NICE];
 	}
 	return count;
 }
 
-show_store_one(cs, sampling_rate);
-show_store_one(cs, ignore_nice_load);
-declare_show_sampling_rate_min(cs);
+show_store_one(dk, sampling_rate);
+show_store_one(dk, ignore_nice_load);
+declare_show_sampling_rate_min(dk);
 
 gov_sys_pol_attr_rw(sampling_rate);
 gov_sys_pol_attr_rw(ignore_nice_load);
@@ -247,7 +247,7 @@ static struct attribute *dbs_attributes_gov_sys[] = {
 	NULL
 };
 
-static struct attribute_group cs_attr_group_gov_sys = {
+static struct attribute_group dk_attr_group_gov_sys = {
 	.attrs = dbs_attributes_gov_sys,
 	.name = "darkness",
 };
@@ -259,19 +259,19 @@ static struct attribute *dbs_attributes_gov_pol[] = {
 	NULL
 };
 
-static struct attribute_group cs_attr_group_gov_pol = {
+static struct attribute_group dk_attr_group_gov_pol = {
 	.attrs = dbs_attributes_gov_pol,
 	.name = "darkness",
 };
 
 /************************** sysfs end ************************/
 
-static int cs_init(struct dbs_data *dbs_data)
+static int dk_init(struct dbs_data *dbs_data)
 {
-	struct cs_dbs_tuners *cached_tuners = &per_cpu(cs_cached_tuners, dbs_data->cpu);
-	struct cs_dbs_tuners *tuners;
+	struct dk_dbs_tuners *cached_tuners = &per_cpu(dk_cached_tuners, dbs_data->cpu);
+	struct dk_dbs_tuners *tuners;
 
-	tuners = kzalloc(sizeof(struct cs_dbs_tuners), GFP_KERNEL);
+	tuners = kzalloc(sizeof(struct dk_dbs_tuners), GFP_KERNEL);
 	if (!tuners) {
 		pr_err("%s: kzalloc failed\n", __func__);
 		return -ENOMEM;
@@ -291,10 +291,9 @@ static int cs_init(struct dbs_data *dbs_data)
 	return 0;
 }
 
-static void cs_exit(struct dbs_data *dbs_data)
+static void dk_exit(struct dbs_data *dbs_data)
 {
-	struct cs_dbs_tuners *cached_tuners = &per_cpu(cs_cached_tuners, dbs_data->cpu);
-	struct cs_dbs_tuners *tuners = dbs_data->tuners;
+	struct dk_dbs_tuners *tuners = dbs_data->tuners;
 
 	if (tuners) {
 		cached_tuners->sampling_rate = tuners->sampling_rate;
@@ -305,29 +304,25 @@ static void cs_exit(struct dbs_data *dbs_data)
 	tuners = NULL;
 }
 
-define_get_cpu_dbs_routines(cs_cpu_dbs_info);
-
-static struct cs_ops cs_ops = {
-	.get_cpu_frequency_table = cs_get_cpu_frequency_table,
-};
+define_get_cpu_dbs_routines(dk_cpu_dbs_info);
 
 static struct common_dbs_data cs_dbs_cdata = {
 	.governor = GOV_DARKNESS,
-	.attr_group_gov_sys = &cs_attr_group_gov_sys,
-	.attr_group_gov_pol = &cs_attr_group_gov_pol,
+	.attr_group_gov_sys = &dk_attr_group_gov_sys,
+	.attr_group_gov_pol = &dk_attr_group_gov_pol,
 	.get_cpu_cdbs = get_cpu_cdbs,
 	.get_cpu_dbs_info_s = get_cpu_dbs_info_s,
-	.gov_dbs_timer = cs_dbs_timer,
-	.gov_check_cpu = cs_check_cpu,
-	.gov_ops = &cs_ops,
-	.init = cs_init,
-	.exit = cs_exit,
+	.gov_dbs_timer = dk_dbs_timer,
+	.gov_check_cpu = dk_check_cpu,
+	.gov_ops = &dk_ops,
+	.init = dk_init,
+	.exit = dk_exit,
 };
 
-static int cs_cpufreq_governor_dbs(struct cpufreq_policy *policy,
+static int dk_cpufreq_governor_dbs(struct cpufreq_policy *policy,
 				   unsigned int event)
 {
-	return cpufreq_governor_dbs(policy, &cs_dbs_cdata, event);
+	return cpufreq_governor_dbs(policy, &dk_dbs_cdata, event);
 }
 
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_DARKNESS
@@ -335,7 +330,7 @@ static
 #endif
 struct cpufreq_governor cpufreq_gov_darkness = {
 	.name			= "darkness",
-	.governor		= cs_cpufreq_governor_dbs,
+	.governor		= dk_cpufreq_governor_dbs,
 	.max_transition_latency	= TRANSITION_LATENCY_LIMIT,
 	.owner			= THIS_MODULE,
 };
@@ -349,10 +344,6 @@ static void __exit cpufreq_gov_dbs_exit(void)
 {
 	cpufreq_unregister_governor(&cpufreq_gov_darkness);
 }
-
-MODULE_AUTHOR("Alucard24@XDA");
-MODULE_DESCRIPTION("'cpufreq_darkness' - A dynamic cpufreq governor v6.0");
-MODULE_LICENSE("GPL");
 
 #ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_DARKNESS
 fs_initcall(cpufreq_gov_dbs_init);
