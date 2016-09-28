@@ -307,10 +307,6 @@ static void dk_exit(struct dbs_data *dbs_data)
 
 define_get_cpu_dbs_routines(dk_cpu_dbs_info);
 
-static struct dk_ops dk_ops = {
-	.get_cpu_frequency_table = dk_get_cpu_frequency_table,
-};
-
 static struct common_dbs_data dk_dbs_cdata = {
 	.governor = GOV_DARKNESS,
 	.attr_group_gov_sys = &dk_attr_group_gov_sys,
@@ -349,10 +345,6 @@ static void __exit cpufreq_gov_dbs_exit(void)
 {
 	cpufreq_unregister_governor(&cpufreq_gov_darkness);
 }
-
-MODULE_AUTHOR("Alucard24@XDA");
-MODULE_DESCRIPTION("'cpufreq_darkness' - A dynamic cpufreq governor v6.0");
-MODULE_LICENSE("GPL");
 
 #ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_DARKNESS
 fs_initcall(cpufreq_gov_dbs_init);
