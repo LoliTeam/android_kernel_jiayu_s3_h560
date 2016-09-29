@@ -20,6 +20,7 @@ obj-$(CONFIG_CPU_FREQ_GOV_YANKACTIVE)	+= cpufreq_yankactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTELLIACTIVE)+= cpufreq_intelliactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTELLIMM)	+= cpufreq_intellimm.o
 obj-$(CONFIG_CPU_FREQ_GOV_THUNDERX)  += cpufreq_thunderx.o
+obj-$(CONFIG_CPU_FREQ_GOV_DARKNESS)  += cpufreq_darkness.o
 
 # CPUfreq cross-arch helpers
 obj-$(CONFIG_CPU_FREQ_TABLE)		+= freq_table.o

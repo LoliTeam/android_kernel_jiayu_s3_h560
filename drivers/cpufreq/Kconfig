@@ -190,6 +190,11 @@ config CPU_FREQ_DEFAULT_GOV_THUNDERX
 	select CPU_FREQ_GOV_THUNDERX
 	help
 
+config CPU_FREQ_DEFAULT_GOV_DARKNESS
+	bool "darkness"
+  	select CPU_FREQ_GOV_DARKNESS
+  	help
+
 endchoice
 
 config CPU_FREQ_GOV_BALANCE
@@ -386,6 +391,10 @@ config CPU_FREQ_GOV_THUNDERX
 		depends on CPU_FREQ
 		help
 		  thunderx' - a "power optimized" governor for Mediatek SoCs
+
+config CPU_FREQ_GOV_DARKNESS
+	tristate "'darkness' cpufreq governor"
+	depends on CPU_FREQ
 
 config GENERIC_CPUFREQ_CPU0
 	tristate "Generic CPU0 cpufreq driver"
