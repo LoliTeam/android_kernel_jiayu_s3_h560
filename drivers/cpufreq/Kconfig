@@ -115,6 +115,11 @@ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
 	  governor. If unsure have a look at the help section of the
 	  driver. Fallback governor will be the performance governor.
 
+config CPU_FREQ_DEFAULT_GOV_ALUCARD
+	bool "alucard"
+	select CPU_FREQ_GOV_ALUCARD
+	help
+
 config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	bool "interactive"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -257,7 +262,7 @@ config CPU_FREQ_GOV_ONDEMAND
 	  If in doubt, say N.
 
 config CPU_FREQ_GOV_INTERACTIVEPLUS
-        tristate "'interactiveplus' cpufreq policy governor"
+    tristate "'interactiveplus' cpufreq policy governor"
 	select CPU_FREQ_TABLE
 	select CPU_FREQ_GOV_COMMON
         help
@@ -274,6 +279,10 @@ config CPU_FREQ_GOV_INTERACTIVEPLUS
           For details, take a look at linux/Documentation/cpu-freq.
 
           If in doubt, say N.
+
+config CPU_FREQ_GOV_ALUCARD
+	tristate "'alucard' cpufreq governor"
+	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_INTERACTIVE
 	tristate "'interactive' cpufreq policy governor"
