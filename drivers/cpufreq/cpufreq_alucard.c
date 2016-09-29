@@ -594,8 +594,6 @@ static void alucard_check_cpu(struct cpufreq_alucard_cpuinfo *this_alucard_cpuin
 			max_load_freq = load_freq;
 	}
 
-	cpufreq_notify_utilization(policy, cur_load);
-
 	/* CPUs Online Scale Frequency*/
 	if (policy->cur < freq_responsiveness) {
 		inc_cpu_load = alucard_tuners_ins.inc_cpu_load_at_min_freq;
@@ -747,6 +745,12 @@ static int cpufreq_governor_alucard(struct cpufreq_policy *policy,
 		if (num_online_cpus() > 1) {
 			delay -= jiffies % delay;
 		}
+
+#define INIT_DELAYED_WORK_DEFERRABLE(_work, _func)		\		
+ 	do {							\		
+ 		INIT_WORK(&(_work)->work, (_func));		\		
+ 		init_timer_deferrable(&(_work)->timer);		\		
+ 	} while (0)
 
 		INIT_DELAYED_WORK_DEFERRABLE(&this_alucard_cpuinfo->work, do_alucard_timer);
 		queue_delayed_work_on(cpu,
