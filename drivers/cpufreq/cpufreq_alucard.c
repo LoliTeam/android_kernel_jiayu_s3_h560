@@ -691,7 +691,7 @@ static int cpufreq_governor_alucard(struct cpufreq_policy *policy,
 			delay = max(delay - (jiffies % delay), usecs_to_jiffies(alucard_tuners_ins.sampling_rate / 2));
 		}
 
-#define INIT_DELAYED_WORK_DEFERRABLE(_work, _func)\	
+#define INIT_DELAYED_WORK_DEFERRABLE(_work, _func)\
  	do {\
  		INIT_WORK(&(_work)->work, (_func));	\
  		init_timer_deferrable(&(_work)->timer);\
