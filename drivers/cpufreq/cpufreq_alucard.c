@@ -540,8 +540,6 @@ static void alucard_check_cpu(struct cpufreq_alucard_cpuinfo *this_alucard_cpuin
 
 	cur_load = 100 * (wall_time - idle_time) / wall_time;
 
-	cpufreq_notify_utilization(policy, cur_load);
-
 	/* CPUs Online Scale Frequency*/
 	if (policy->cur < freq_responsiveness) {
 		inc_cpu_load = alucard_tuners_ins.inc_cpu_load_at_min_freq;
