@@ -691,7 +691,13 @@ static int cpufreq_governor_alucard(struct cpufreq_policy *policy,
 			delay = max(delay - (jiffies % delay), usecs_to_jiffies(alucard_tuners_ins.sampling_rate / 2));
 		}
 
-		INIT_DEFERRABLE_WORK(&this_alucard_cpuinfo->work, do_alucard_timer);
+#define INIT_DELAYED_WORK_DEFERRABLE(_work, _func)		\		
+ 	do {							\		
+ 		INIT_WORK(&(_work)->work, (_func));		\		
+ 		init_timer_deferrable(&(_work)->timer);		\		
+ 	} while (0)
+
+				INIT_DEFERRABLE_WORK(&this_alucard_cpuinfo->work, do_alucard_timer);
 		mod_delayed_work_on(cpu,
 			system_wq, &this_alucard_cpuinfo->work, delay);
 
