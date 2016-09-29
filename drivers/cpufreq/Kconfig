@@ -185,6 +185,11 @@ config CPU_FREQ_DEFAULT_GOV_INTELLIMM
           Use the CPUFreq governor 'intelliminmax' as default. This is
           governor will use only 3 different frequencies, idle, UI and max
 
+config CPU_FREQ_DEFAULT_GOV_THUNDERX
+	bool "thunderx"
+	select CPU_FREQ_GOV_THUNDERX
+	help
+
 endchoice
 
 config CPU_FREQ_GOV_BALANCE
@@ -375,6 +380,12 @@ config CPU_FREQ_GOV_INTELLIMM
         help
           Use the CPUFreq governor 'intelliminmax' as default. This is
 	  governor will use only 3 different frequencies, idle, UI and max
+
+config CPU_FREQ_GOV_THUNDERX
+		tristate "'thunderx' cpufreq governor"
+		depends on CPU_FREQ
+		help
+		  thunderx' - a "power optimized" governor for Mediatek SoCs
 
 config GENERIC_CPUFREQ_CPU0
 	tristate "Generic CPU0 cpufreq driver"
