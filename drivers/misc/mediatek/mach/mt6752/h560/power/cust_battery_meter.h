@@ -37,15 +37,15 @@
 #define FG_METER_RESISTANCE 	0
 
 /* Qmax for battery  */
-#define Q_MAX_POS_50	3060
-#define Q_MAX_POS_25	3040
-#define Q_MAX_POS_0	2837
-#define Q_MAX_NEG_10	2702
+#define Q_MAX_POS_50	2560
+#define Q_MAX_POS_25	2540
+#define Q_MAX_POS_0	2343
+#define Q_MAX_NEG_10	2202
 
-#define Q_MAX_POS_50_H_CURRENT	3012
-#define Q_MAX_POS_25_H_CURRENT	2953
-#define Q_MAX_POS_0_H_CURRENT		2563
-#define Q_MAX_NEG_10_H_CURRENT	1393
+#define Q_MAX_POS_50_H_CURRENT	2512
+#define Q_MAX_POS_25_H_CURRENT	2453
+#define Q_MAX_POS_0_H_CURRENT		2023
+#define Q_MAX_NEG_10_H_CURRENT	1102
 
 
 /* Discharge Percentage */
