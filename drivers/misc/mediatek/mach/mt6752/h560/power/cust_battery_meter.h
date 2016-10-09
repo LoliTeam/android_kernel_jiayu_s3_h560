@@ -38,18 +38,18 @@
 
 /* Qmax for battery  */
 #define Q_MAX_POS_50	2550
-#define Q_MAX_POS_25	2550
-#define Q_MAX_POS_0	2550
-#define Q_MAX_NEG_10	2550
+#define Q_MAX_POS_25	2530
+#define Q_MAX_POS_0	2330
+#define Q_MAX_NEG_10	2210
 
 #define Q_MAX_POS_50_H_CURRENT	2550
-#define Q_MAX_POS_25_H_CURRENT	2550
-#define Q_MAX_POS_0_H_CURRENT		2550
-#define Q_MAX_NEG_10_H_CURRENT	2550
+#define Q_MAX_POS_25_H_CURRENT	2490
+#define Q_MAX_POS_0_H_CURRENT		2120
+#define Q_MAX_NEG_10_H_CURRENT	950
 
 
 /* Discharge Percentage */
-#define OAM_D5		 0		//  1 : D5,   0: D2
+#define OAM_D5		 1		//  1 : D5,   0: D2
 
 
 /* battery meter parameter */
