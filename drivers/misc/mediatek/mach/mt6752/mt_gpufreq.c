@@ -70,6 +70,13 @@
 //#define MT_GPUFREQ_OC_PROTECT
 
 /**************************************************
+ * Define overclock
+ ***************************************************/
+#ifdef CONFIG_GPU_OC
+#define MTK_TABLET_TURBO
+#endif /* CONFIG_GPU_OC */
+
+/**************************************************
  * GPU DVFS input boost feature
  ***************************************************/
 #define MT_GPUFREQ_INPUT_BOOST
