@@ -26,7 +26,7 @@
 #include <asm/pgtable-hwdef.h>
 #include <asm/pgtable.h>
 
-#include "proc-macros.S"
+//#include "proc-macros.S"
 
 #ifndef CONFIG_SMP
 /* PTWs cacheable, inner/outer WBWA not shareable */
