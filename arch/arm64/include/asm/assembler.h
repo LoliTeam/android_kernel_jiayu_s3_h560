@@ -20,6 +20,7 @@ Based on arch/arm/include/asm/assembler.h, arch/arm/mm/proc-macros.S *
 #endif
 
 #include <asm/ptrace.h>
+#include <asm/asm-offsets.h>
 
 /*
  * Stack pushing/popping (register pairs only). Equivalent to store decrement
