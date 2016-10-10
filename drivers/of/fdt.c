@@ -8,7 +8,7 @@
  * modify it under the terms of the GNU General Public License
  * version 2 as published by the Free Software Foundation.
  */
-
+#include <linux/crc32.h>
 #include <linux/kernel.h>
 #include <linux/initrd.h>
 #include <linux/memblock.h>
@@ -20,7 +20,7 @@
 #include <linux/string.h>
 #include <linux/errno.h>
 #include <linux/slab.h>
-
+#include <linux/sysfs.h>
 #include <asm/setup.h>  /* for COMMAND_LINE_SIZE */
 #ifdef CONFIG_PPC
 #include <asm/machdep.h>
@@ -444,7 +444,7 @@ int __initdata dt_root_size_cells;
 struct boot_param_header *initial_boot_params;
 
 #ifdef CONFIG_OF_EARLY_FLATTREE
-
+static u32 of_fdt_crc32;
 /**
  * res_mem_reserve_reg() - reserve all memory described in 'reg' property
  */
@@ -581,6 +581,8 @@ int __init of_scan_flat_dt(int (*it)(unsigned long node,
 {
 	unsigned long p = ((unsigned long)initial_boot_params) +
 		be32_to_cpu(initial_boot_params->off_dt_struct);
+     of_fdt_crc32 = crc32_be(~0, initial_boot_params,
+				fdt_totalsize(initial_boot_params));
 	int rc = 0;
 	int depth = -1;
 
@@ -972,5 +974,37 @@ void __init unflatten_device_tree(void)
 	/* Get pointer to "/chosen" and "/aliasas" nodes for use everywhere */
 	of_alias_scan(early_init_dt_alloc_memory_arch);
 }
+
+#ifdef CONFIG_SYSFS
+static ssize_t of_fdt_raw_read(struct file *filp, struct kobject *kobj,
+			       struct bin_attribute *bin_attr,
+			       char *buf, loff_t off, size_t count)
+{
+	memcpy(buf, initial_boot_params + off, count);
+	return count;
+}
+
+static int __init of_fdt_raw_init(void)
+{
+	static struct bin_attribute of_fdt_raw_attr = {
+		.attr = { .name = "fdt", .mode = S_IRUSR },
+		.read = of_fdt_raw_read,
+		.write = NULL,
+		.size = 0
+	};
+
+	if (!initial_boot_params)
+		return 0;
+
+	if (of_fdt_crc32 != crc32_be(~0, initial_boot_params,
+				     fdt_totalsize(initial_boot_params))) {
+		pr_warn("fdt: not creating '/sys/firmware/fdt': CRC check failed\n");
+		return 0;
+	}
+	of_fdt_raw_attr.size = fdt_totalsize(initial_boot_params);
+	return sysfs_create_bin_file(firmware_kobj, &of_fdt_raw_attr);
+}
+late_initcall(of_fdt_raw_init);
+#endif
 
 #endif /* CONFIG_OF_EARLY_FLATTREE */
