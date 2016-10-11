@@ -29,7 +29,7 @@ GEN_OPT_FLAGS := $(call cc-option,$(ARM_ARCH_OPT),-march=armv8-a,-mpc-relative-l
  -fivopts
 
 KBUILD_CFLAGS	+= -mgeneral-regs-only
-KBUILD_CFLAGS	+= -fno-pic -mtune=cortex-a53 -march=armv8-a -O2 -ftree-vectorize
+KBUILD_CFLAGS	+= -fno-pic -mtune=cortex-a53 -march=armv8-a -Ofast -ftree-vectorize
 KBUILD_CPPFLAGS	+= $(GEN_OPT_FLAGS)
 AS		+= -EL
 LD		+= -EL
