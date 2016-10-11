@@ -15,7 +15,6 @@ config GPU_OC
 
 config MORE_FREQ
 	bool "MORE_FREQUENCIES"
-	depends on CPU_OC
 	default n
 	help
 	  More frequencies for choice
