@@ -23,7 +23,7 @@ struct alsps_hw *tmg399x_get_cust_alsps_hw(void) {
 }
 #include <linux/mutex.h>
 #include <linux/workqueue.h>
-#include "tmg399x.h"
+#include <tmg399x.h>
 struct tmg399x_parameters parameters = {
     .als_time = 0xFE, /* 5.6ms */
     .als_gain = AGAIN_64,

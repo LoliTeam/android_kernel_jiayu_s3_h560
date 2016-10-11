@@ -44,7 +44,7 @@
 #include <linux/sensors_io.h>
 #include <cust_alsps.h>
 #include "gesture.h"
-#include "tmg399x.h"
+#include <tmg399x.h>
 #include <alsps.h>
 #include <linux/batch.h>
 

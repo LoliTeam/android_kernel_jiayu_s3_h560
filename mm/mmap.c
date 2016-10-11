@@ -52,18 +52,6 @@
 #define arch_rebalance_pgtables(addr, len)		(addr)
 #endif
 
-#ifdef CONFIG_HAVE_ARCH_MMAP_RND_BITS
-const int mmap_rnd_bits_min = CONFIG_ARCH_MMAP_RND_BITS_MIN;
-const int mmap_rnd_bits_max = CONFIG_ARCH_MMAP_RND_BITS_MAX;
-int mmap_rnd_bits __read_mostly = CONFIG_ARCH_MMAP_RND_BITS;
-#endif
-#ifdef CONFIG_HAVE_ARCH_MMAP_RND_COMPAT_BITS
-const int mmap_rnd_compat_bits_min = CONFIG_ARCH_MMAP_RND_COMPAT_BITS_MIN;
-const int mmap_rnd_compat_bits_max = CONFIG_ARCH_MMAP_RND_COMPAT_BITS_MAX;
-int mmap_rnd_compat_bits __read_mostly = CONFIG_ARCH_MMAP_RND_COMPAT_BITS;
-#endif
-
-
 static void unmap_region(struct mm_struct *mm,
 		struct vm_area_struct *vma, struct vm_area_struct *prev,
 		unsigned long start, unsigned long end);
@@ -2541,11 +2529,12 @@ int do_munmap(struct mm_struct *mm, unsigned long start, size_t len)
 		if (file) {
 			const char *name=file->f_path.dentry->d_iname;
 			if(name && (strstr(name,".so") || strstr(name,".oat") || strstr(name,".art") || strstr(name,".dex") || strstr(name,".apk")))
-				pr_debug("unmap:%s 0x%lx - 0x%lx\n", name, vma->vm_start, vma->vm_end);
+				//pr_debug("unmap:%s 0x%lx - 0x%lx\n", name, vma->vm_start, vma->vm_end);
+				printk(KERN_DEBUG "unmap:%s 0x%lx - 0x%lx\n", name, vma->vm_start, vma->vm_end);
 		} else {
 			const char *name = arch_vma_name(vma);
 			if(name)
-				pr_debug("unmap arch_vma_name:%s 0x%lx - 0x%lx\n", name, vma->vm_start, vma->vm_end);
+				printk(KERN_DEBUG "unmap arch_vma_name:%s 0x%lx - 0x%lx\n", name, vma->vm_start, vma->vm_end);
 		}
 	}
 #endif

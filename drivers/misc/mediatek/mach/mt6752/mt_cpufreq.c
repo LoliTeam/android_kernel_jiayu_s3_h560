@@ -278,7 +278,7 @@ static unsigned int _mt_cpufreq_get_cpu_level(void)
     cpufreq_info("from efuse: function code 0 = 0x%x, function code 1 = 0x%x\n", func_code_0, func_code_1);
 
     /* get CPU clock-frequency from DT */
-    #ifdef CONFIG_OF
+#ifdef CONFIG_OF
     {
         struct device_node *node = of_find_node_by_type(NULL, "cpu");
         unsigned int cpu_speed = 0;
@@ -301,35 +301,35 @@ static unsigned int _mt_cpufreq_get_cpu_level(void)
             cpu_speed = cpu_speed / 1000 / 1000;    // MHz
         else {
             cpufreq_err("@%s: missing clock-frequency property, use default CPU level\n", __func__);
-    #ifdef CONFIG_CPU_OC
+#ifdef CONFIG_CPU_OC
             return CPU_LEVEL_0;
-    #else    /* CONFIG_CPU_OC */
+#else    /* CONFIG_CPU_OC */
             return CPU_LEVEL_1;
-    #endif   /* CONFIG_CPU_OC */
+#endif   /* CONFIG_CPU_OC */
         }
 
         cpufreq_info("CPU clock-frequency from DT = %d MHz\n", cpu_speed);
 
         if (cpu_speed >= 1700)
-    #ifdef CONFIG_CPU_OC
+#ifdef CONFIG_CPU_OC
             lv = CPU_LEVEL_0;   // 2.0G
-    #else    /* CONFIG_CPU_OC */
+#else    /* CONFIG_CPU_OC */
             lv = CPU_LEVEL_1;   // 1.7G
-    #endif   /* CONFIG_CPU_OC */
+#endif   /* CONFIG_CPU_OC */
         else if (cpu_speed >= 1500)
             lv = CPU_LEVEL_2;   // 1.5G
         else if (cpu_speed >= 1300)
             lv = CPU_LEVEL_3;   // 1.3G
         else {
             cpufreq_err("No suitable DVFS table, set to default CPU level! clock-frequency=%d\n", cpu_speed);
-    #ifdef CONFIG_CPU_OC
+#ifdef CONFIG_CPU_OC
             lv = CPU_LEVEL_0;   // 2.0G
-    #else    /* CONFIG_CPU_OC */
+#else    /* CONFIG_CPU_OC */
             lv = CPU_LEVEL_1;   // 1.7G
-    #endif   /* CONFIG_CPU_OC */
+#endif   /* CONFIG_CPU_OC */
         }
     }
-    #else   /* CONFIG_OF */
+#else   /* CONFIG_OF */
     /* no DT, we should check efuse for CPU speed HW bounding */
     {
         unsigned int cpu_speed_bounding = _GET_BITS_VAL_(3 : 0, get_devinfo_with_index(CPUFREQ_EFUSE_INDEX));
@@ -343,9 +343,9 @@ static unsigned int _mt_cpufreq_get_cpu_level(void)
 				AllowTurboMode = 0; /* 1.69 * 1.1 = 1.859G */
             case 3:
             case 4:
-     #ifdef CONFIG_CPU_OC
+#ifdef CONFIG_CPU_OC
                 lv = CPU_LEVEL_0;   // 2.0G
-     #else    /* CONFIG_CPU_OC */
+#else    /* CONFIG_CPU_OC */
                 lv = CPU_LEVEL_1;   // 1.7G
 #endif   /* CONFIG_CPU_OC */
                 break;
