@@ -78,9 +78,6 @@ CONFIG_TICK_CPU_ACCOUNTING=y
 # CONFIG_BSD_PROCESS_ACCT is not set
 # CONFIG_TASKSTATS is not set
 
-CONFIG_KEXEC=y
-
-
 #
 # RCU Subsystem
 #
