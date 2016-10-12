@@ -115,7 +115,7 @@ ldp	x24, x25, [x21, #16]
 
 	/* Start new image. */
 	ldr	x4, arm64_kexec_kimage_start
-	mov	x0, xzr
+	ldr	x0, arm64_kexec_dtb_addr
 	mov	x1, xzr
 	mov	x2, xzr
 	mov	x3, xzr
@@ -132,6 +132,14 @@ ldp	x24, x25, [x21, #16]
 .globl arm64_kexec_kimage_start
 arm64_kexec_kimage_start:
 	.quad	0x0
+
+/*
+ * arm64_kexec_dtb_addr - Physical address of a device tree.
+ */
+.globl arm64_kexec_dtb_addr
+arm64_kexec_dtb_addr:
+	.quad	0x0
+
 
 /*
  * arm64_kexec_kimage_head - Copy of image->head, the list of kimage entries.
