@@ -21,7 +21,7 @@
 #include <linux/init.h>
 #include <asm/assembler.h>
 
-//#include "proc-macros.S"
+#include "proc-macros.S"
 
 /*
  *	__flush_dcache_all()
