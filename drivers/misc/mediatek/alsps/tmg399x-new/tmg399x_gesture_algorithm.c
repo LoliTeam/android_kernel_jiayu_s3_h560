@@ -21,7 +21,7 @@
 #include <linux/module.h>
 #include <linux/device.h>
 #include <linux/string.h>
-#include <tmg399x.h>
+#include "tmg399x.h"
 
 #define ARRAY_LENGTH	500
 
