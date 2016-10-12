@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
  */
-static const int bypass_purgatory = 1;
+
 #include <linux/kexec.h>
 #include <linux/of_fdt.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
-#include <linux/libfdt_env.h>
+
 #include <asm/cacheflush.h>
 #include <asm/system_misc.h>
 
@@ -35,87 +35,6 @@ static bool kexec_is_dtb(const void *dtb)
 	return get_user(magic, (__be32 *)dtb) ? false :
 		(be32_to_cpu(magic) == OF_DT_HEADER);
 }
-
-static bool kexec_is_kernel(const void *image)
-{
-	struct arm64_image_header {
-		uint8_t pe_sig[2];
-		uint16_t branch_code[3];
-		uint64_t text_offset;
-		uint64_t image_size;
-		uint8_t flags[8];
-		uint64_t reserved_1[3];
-		uint8_t magic[4];
-		uint32_t pe_header;
-	} h;
-
-        if (copy_from_user(&h, image, sizeof(struct arm64_image_header)))
-		return false;
-
-	if (!h.text_offset)
-		return false;
-
-	return (h.magic[0] == 'A'
-		&& h.magic[1] == 'R'
-		&& h.magic[2] == 'M'
-		&& h.magic[3] == 0x64U);
-}
-
-/**
- * kexec_find_kernel_seg - Helper routine to find the kernel segment.
- */
-static const struct kexec_segment *kexec_find_kernel_seg(
-	const struct kimage *kimage)
-{
-	int i;
-
-	for (i = 0; i < kimage->nr_segments; i++) {
-		if (kexec_is_kernel(kimage->segment[i].buf))
-			return &kimage->segment[i];
-	}
-
-	BUG();
-	return NULL;
-}
-
-/**
- * kexec_find_dtb_seg - Helper routine to find the dtb segment.
- */
-static const struct kexec_segment *kexec_find_dtb_seg(
-	const struct kimage *kimage)
-{
-	int i;
-
-	for (i = 0; i < kimage->nr_segments; i++) {
-		if (kexec_is_dtb(kimage->segment[i].buf))
-			return &kimage->segment[i];
-	}
-
-	BUG();
-	return NULL;
-}
-
-static struct bypass {
-	unsigned long kernel;
-	unsigned long dtb;
-} bypass;
-
-static void fill_bypass(const struct kimage *kimage)
-{
-	const struct kexec_segment *seg;
-
-	seg = kexec_find_kernel_seg(kimage);
-	BUG_ON(!seg || !seg->mem);
-	bypass.kernel = seg->mem;
-
-	seg = kexec_find_dtb_seg(kimage);
-	BUG_ON(!seg || !seg->mem);
-	bypass.dtb = seg->mem;
-
-	pr_debug("%s: kernel: %016lx\n", __func__, bypass.kernel);
-	pr_debug("%s: dtb:    %016lx\n", __func__, bypass.dtb);
-}
-
 
 /**
  * kexec_image_info - For debugging output.
@@ -160,16 +79,8 @@ void machine_kexec_cleanup(struct kimage *image)
  */
 int machine_kexec_prepare(struct kimage *image)
 {
+	arm64_kexec_kimage_start = image->start;
 	kexec_image_info(image);
-    
-    fill_bypass(image);
-	if (bypass_purgatory) {
-		arm64_kexec_kimage_start = bypass.kernel;
-		arm64_kexec_dtb_addr = bypass.dtb;
-	} else {
-		arm64_kexec_kimage_start = image->start;
-		arm64_kexec_dtb_addr = 0;
-	}
 	return 0;
 }
 
@@ -271,7 +182,6 @@ void machine_kexec(struct kimage *image)
 	 * and then will transfer control to the entry point of the new kernel.
 	 */
 	soft_restart(reboot_code_buffer_phys);
-    BUG(); /* Should never get here. */
 }
 
 void machine_crash_shutdown(struct pt_regs *regs)
