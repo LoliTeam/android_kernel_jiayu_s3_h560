@@ -1478,8 +1478,6 @@ static int mtkfb_ioctl(struct fb_info *info, unsigned int cmd, unsigned long arg
 		//return mtkfb_update_screen(info);
 		return 0;
 	}
-
-#endif // MTK_FB_OVERLAY_SUPPORT
 	
     case MTKFB_GET_DEFAULT_UPDATESPEED:
 	{
