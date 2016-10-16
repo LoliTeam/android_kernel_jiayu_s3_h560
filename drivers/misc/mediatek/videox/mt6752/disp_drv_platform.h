@@ -35,7 +35,6 @@
 #define ALIGN_TO(x, n)  \
 	(((x) + ((n) - 1)) & ~((n) - 1))
 #define MTK_FB_START_DSI_ISR
-#define MTK_FB_OVERLAY_SUPPORT
 #define MTK_FB_SYNC_SUPPORT
 #define MTK_FB_ION_SUPPORT
 #define MTK_FB_ESD_ENABLE
