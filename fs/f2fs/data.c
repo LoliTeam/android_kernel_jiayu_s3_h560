@@ -402,7 +402,7 @@ static int get_data_block_ro_bmap(struct inode *inode, sector_t iblock,
  * The reason for this special functionality is to exploit VFS readahead
  * mechanism.
  */
-static int get_data_block_ro(struct inode *inode, sector_t iblock,
+int get_data_block_ro(struct inode *inode, sector_t iblock,
 			struct buffer_head *bh_result, int create)
 {
 	unsigned int blkbits = inode->i_sb->s_blocksize_bits;
