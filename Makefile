@@ -400,6 +400,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
            --param l2-cache-size=2048 \
            --param l1-cache-line-size=64 \
 	   -fno-tree-vectorize -ffast-math \
+	   -Wno-sizeof-pointer-memaccess \
            -march=armv8-a \
 	   -std=gnu89 \
 	   $(GEN_OPT_FLAGS)
