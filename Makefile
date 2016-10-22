@@ -244,7 +244,7 @@ EXPERIMENTAL = -floop-unroll-and-jam -fassociative-math -freciprocal-math -fno-s
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) -pthread -std=gnu89
+HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) $(EXPERIMENTAL) -pthread -std=gnu89
 HOSTCXXFLAGS = -DNDEBUG -pipe -Ofast -flto $(GRAPHITE) $(EXPERIMENTAL)
 
 ifeq ($(shell $(HOSTCC) -v 2>&1 | grep -c "clang version"), 1)
