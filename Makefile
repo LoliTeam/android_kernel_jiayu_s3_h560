@@ -398,7 +398,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
            -fno-delete-null-pointer-checks \
            -mtune=cortex-a53 \
            --param l1-cache-size=32 \
-           --param l2-cache-size=2048 \
+           --param l2-cache-size=512 \
            --param l1-cache-line-size=64 \
 	   -fno-tree-vectorize -ffast-math \
 	   -Wno-sizeof-pointer-memaccess \
