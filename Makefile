@@ -239,12 +239,13 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL -fassociative-math -freciprocal-math -fno-signed-zeros -fno-trapping-math
+GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL -march=native
+EXPERIMENTAL = -floop-unroll-and-jam -fassociative-math -freciprocal-math -fno-signed-zeros -fno-trapping-math -floop-parallelize-all -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon -fivopts -ftree-vectorize -fsplit-ivs-in-unroller -fno-peephole2 -fstrict-aliasing -fwrapv -fno-strict-overflow -ffast-math
 
 HOSTCC       = gcc
 HOSTCXX      = g++
 HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) -pthread -std=gnu89
-HOSTCXXFLAGS = -DNDEBUG -pipe -Ofast -flto $(GRAPHITE)
+HOSTCXXFLAGS = -DNDEBUG -pipe -Ofast -flto $(GRAPHITE) $(EXPERIMENTAL)
 
 ifeq ($(shell $(HOSTCC) -v 2>&1 | grep -c "clang version"), 1)
 HOSTCFLAGS  += -Wno-unused-value -Wno-unused-parameter \
