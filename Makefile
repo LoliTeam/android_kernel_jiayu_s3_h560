@@ -239,8 +239,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL -march=native
-EXPERIMENTAL = -floop-unroll-and-jam -fassociative-math -freciprocal-math -fno-signed-zeros -fno-trapping-math -floop-parallelize-all -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon -fivopts -ftree-vectorize -fsplit-ivs-in-unroller -fno-peephole2 -fstrict-aliasing -fwrapv -fno-strict-overflow -ffast-math
+GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL
+EXPERIMENTAL = -floop-unroll-and-jam -fno-signed-zeros -floop-parallelize-all -fno-peephole2 -fstrict-aliasing
 
 HOSTCC       = gcc
 HOSTCXX      = g++
@@ -398,7 +398,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
            -fno-delete-null-pointer-checks \
            -mtune=cortex-a53 \
            --param l1-cache-size=32 \
-           --param l2-cache-size=512 \
+           --param l2-cache-size=2048 \
            --param l1-cache-line-size=64 \
 	   -fno-tree-vectorize -ffast-math \
 	   -Wno-sizeof-pointer-memaccess \
