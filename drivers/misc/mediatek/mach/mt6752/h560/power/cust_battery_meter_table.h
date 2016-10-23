@@ -500,7 +500,6 @@ BATTERY_PROFILE_STRUC battery_profile_t3[] =
 {100,3249},
 {100,3249}
 };
-#endif
 
 // battery profile for actual temperature. The size should be the same as T1, T2 and T3
 BATTERY_PROFILE_STRUC battery_profile_temperature[] =
@@ -868,8 +867,7 @@ R_PROFILE_STRUC r_profile_t3[] =
 {130,3251},
 {125,3250},
 {125,3249},
-{125,3249}
-      
+{125,3249}      
 }; 
 
 // r-table profile for actual temperature. The size should be the same as T1, T2 and T3
