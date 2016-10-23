@@ -239,8 +239,7 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL -floop-unroll-and-jam -floop-parallelize-all
-
+GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL
 HOSTCC       = gcc
 HOSTCXX      = g++
 HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) -pthread -std=gnu89
