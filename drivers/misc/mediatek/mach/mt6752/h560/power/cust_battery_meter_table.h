@@ -11,8 +11,7 @@
 #define BAT_NTC_68 0
 
 #if (BAT_NTC_10 == 1)
-#define RBAT_PULL_UP_R             16900	
-#define RBAT_PULL_DOWN_R		   27000	
+#define RBAT_PULL_UP_R             24000		
 #endif
 
 #if (BAT_NTC_47 == 1)
