@@ -37,15 +37,15 @@
 #define FG_METER_RESISTANCE 	0
 
 /* Qmax for battery  */
-#define Q_MAX_POS_50	3060	     //2560
-#define Q_MAX_POS_25	3040	     //2540
-#define Q_MAX_POS_0	2837	       //2337
-#define Q_MAX_NEG_10	2702	     //2202
+#define Q_MAX_POS_50	3013      
+#define Q_MAX_POS_25	2989	    
+#define Q_MAX_POS_0	2531     
+#define Q_MAX_NEG_10	2098	     
 
-#define Q_MAX_POS_50_H_CURRENT	3012	      //2512
-#define Q_MAX_POS_25_H_CURRENT	2953	      //2453
-#define Q_MAX_POS_0_H_CURRENT		2563		      //2063
-#define Q_MAX_NEG_10_H_CURRENT	1393	      //893
+#define Q_MAX_POS_50_H_CURRENT	2993	      //2512
+#define Q_MAX_POS_25_H_CURRENT	2934	      //2453
+#define Q_MAX_POS_0_H_CURRENT		2194		      //2063
+#define Q_MAX_NEG_10_H_CURRENT	1076	      //893
 
 
 /* Discharge Percentage */
@@ -54,7 +54,7 @@
 
 /* battery meter parameter */
 #define CHANGE_TRACKING_POINT
-#define CUST_TRACKING_POINT  1
+#define CUST_TRACKING_POINT  14
 #define CUST_R_SENSE         68
 #define CUST_HW_CC 		    0
 #define AGING_TUNING_VALUE   103
@@ -63,18 +63,18 @@
 #define OCV_BOARD_COMPESATE	0 //mV 
 #define R_FG_BOARD_BASE		1000
 #define R_FG_BOARD_SLOPE	1000 //slope
-#define CAR_TUNE_VALUE		102 //1.00
+#define CAR_TUNE_VALUE		94 //1.00
 
 
 /* HW Fuel gague  */
 #define CURRENT_DETECT_R_FG	10  //1mA
 #define MinErrorOffset       1000
 #define FG_VBAT_AVERAGE_SIZE 18
-#define R_FG_VALUE 			10 // mOhm, base is 20
+#define R_FG_VALUE 			0 // mOhm, base is 20
 
-#define CUST_POWERON_DELTA_CAPACITY_TOLRANCE	10
+#define CUST_POWERON_DELTA_CAPACITY_TOLRANCE	40
 #define CUST_POWERON_LOW_CAPACITY_TOLRANCE		5
-#define CUST_POWERON_MAX_VBAT_TOLRANCE			94
+#define CUST_POWERON_MAX_VBAT_TOLRANCE			90
 #define CUST_POWERON_DELTA_VBAT_TOLRANCE		30
 
 /* Disable Battery check for HQA */
@@ -85,7 +85,7 @@
 /* Dynamic change wake up period of battery thread when suspend*/
 #define VBAT_NORMAL_WAKEUP		3600		//3.6V
 #define VBAT_LOW_POWER_WAKEUP		3500		//3.5v
-#define NORMAL_WAKEUP_PERIOD		5400 		//90 * 60 = 90 min
+#define NORMAL_WAKEUP_PERIOD		200 		//90 * 60 = 90 min
 #define LOW_POWER_WAKEUP_PERIOD		300		//5 * 60 = 5 min
 #define CLOSE_POWEROFF_WAKEUP_PERIOD	30	//30 s
 
