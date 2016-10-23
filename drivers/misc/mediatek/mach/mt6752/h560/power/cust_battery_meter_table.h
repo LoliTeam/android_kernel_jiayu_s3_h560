@@ -871,7 +871,7 @@ R_PROFILE_STRUC r_profile_t3[] =
 {125,3249}
       
 }; 
-#endif
+
 // r-table profile for actual temperature. The size should be the same as T1, T2 and T3
 R_PROFILE_STRUC r_profile_temperature[] =
 {
