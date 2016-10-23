@@ -240,10 +240,12 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else echo sh; fi ; fi)
 
 GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL
+EXPERIMENTAL = -floop-unroll-and-jam -fno-signed-zeros -floop-parallelize-all -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon -fsplit-ivs-in-unroller -fno-peephole2 -fstrict-aliasing -fwrapv -fno-strict-overflow
+
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) -pthread -std=gnu89
-HOSTCXXFLAGS = -DNDEBUG -pipe -Ofast -flto $(GRAPHITE)
+HOSTCFLAGS   = -DNDEBUG -pipe -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -flto -fomit-frame-pointer $(GRAPHITE) $(EXPERIMENTAL) -pthread -std=gnu89
+HOSTCXXFLAGS = -DNDEBUG -pipe -Ofast -flto $(GRAPHITE) $(EXPERIMENTAL)
 
 ifeq ($(shell $(HOSTCC) -v 2>&1 | grep -c "clang version"), 1)
 HOSTCFLAGS  += -Wno-unused-value -Wno-unused-parameter \
@@ -398,6 +400,8 @@ KBUILD_CPPFLAGS := -D__KERNEL__
            --param l1-cache-size=32 \
            --param l2-cache-size=512 \
            --param l1-cache-line-size=64 \
+	   -fno-tree-vectorize -ffast-math \
+ -	   -Wno-sizeof-pointer-memaccess \
            -march=armv8-a \
 	   -std=gnu89 \
 	   $(GEN_OPT_FLAGS)
