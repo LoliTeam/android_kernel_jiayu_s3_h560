@@ -6,9 +6,9 @@
 // ============================================================
 // define
 // ============================================================
-#define BAT_NTC_10 1
+#define BAT_NTC_10 0
 #define BAT_NTC_47 0
-#define BAT_NTC_68 0
+#define BAT_NTC_68 1
 
 #if (BAT_NTC_10 == 1)
 #define RBAT_PULL_UP_R             24000		
@@ -16,12 +16,12 @@
 
 #if (BAT_NTC_47 == 1)
 #define RBAT_PULL_UP_R             61900	
-#define RBAT_PULL_DOWN_R		  100000	
+			
 #endif
 
 #if (BAT_NTC_68 == 1)
 #define RBAT_PULL_UP_R             63400	
-#define RBAT_PULL_DOWN_R	91000
+	
 #endif
 
 #define RBAT_PULL_UP_VOLT          1800
