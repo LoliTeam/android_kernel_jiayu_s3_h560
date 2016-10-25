@@ -15,13 +15,12 @@
 //#define FIXED_TBAT_25
 
 /* ADC Channel Number */
-#if 0
 #define CUST_TABT_NUMBER 17
 #define VBAT_CHANNEL_NUMBER      7
 #define ISENSE_CHANNEL_NUMBER	 6
 #define VCHARGER_CHANNEL_NUMBER  4
 #define VBATTEMP_CHANNEL_NUMBER  5
-#endif
+
 /* ADC resistor  */
 #define R_BAT_SENSE 4					
 #define R_I_SENSE 4						
@@ -37,19 +36,19 @@
 #define FG_METER_RESISTANCE 	0
 
 /* Qmax for battery  */
-#define Q_MAX_POS_50	3013      
-#define Q_MAX_POS_25	2989	    
-#define Q_MAX_POS_0	2531     
-#define Q_MAX_NEG_10	2098	     
+#define Q_MAX_POS_50	2950      
+#define Q_MAX_POS_25	2973	    
+#define Q_MAX_POS_0	2764     
+#define Q_MAX_NEG_10	2464	     
 
-#define Q_MAX_POS_50_H_CURRENT	2993	      //2512
-#define Q_MAX_POS_25_H_CURRENT	2934	      //2453
-#define Q_MAX_POS_0_H_CURRENT		2194		      //2063
-#define Q_MAX_NEG_10_H_CURRENT	1076	      //893
+#define Q_MAX_POS_50_H_CURRENT	2874	      //2512
+#define Q_MAX_POS_25_H_CURRENT	2868	      //2453
+#define Q_MAX_POS_0_H_CURRENT		2524		      //2063
+#define Q_MAX_NEG_10_H_CURRENT	1840	      //893
 
 
 /* Discharge Percentage */
-#define OAM_D5		 0		//  1 : D5,   0: D2
+#define OAM_D5		 1		//  1 : D5,   0: D2
 
 
 /* battery meter parameter */
