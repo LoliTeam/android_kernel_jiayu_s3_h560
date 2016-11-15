@@ -240,7 +240,7 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else echo sh; fi ; fi)
 
 GRAPHITE = -fgraphite -fgraphite-identity -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -ftree-loop-linear -floop-nest-optimize -frename-registers -fopenmp -D_GLIBCXX_PARALLEL
-EXPERIMENTAL = -floop-unroll-and-jam -fno-signed-zeros -floop-parallelize-all -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon -fsplit-ivs-in-unroller -fno-peephole2 -fstrict-aliasing -fwrapv -fno-strict-overflow
+EXPERIMENTAL = -fno-signed-zeros -floop-parallelize-all -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon -fsplit-ivs-in-unroller -fno-peephole2 -fstrict-aliasing -fwrapv -fno-strict-overflow
 
 HOSTCC       = gcc
 HOSTCXX      = g++
