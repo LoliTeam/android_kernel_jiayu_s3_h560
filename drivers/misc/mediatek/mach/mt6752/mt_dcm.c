@@ -1226,9 +1226,9 @@ void mt_dcm_restore(void)
 
 EXPORT_SYMBOL(mt_dcm_emi_1pll_mode);
 EXPORT_SYMBOL(mt_dcm_emi_3pll_mode);
-EXPORT_SYMBOL(mt_dcm_emi_off_mode);
-EXPORT_SYMBOL(mt_dcm_emi_disable);
-EXPORT_SYMBOL(mt_dcm_emi_restore);
+EXPORT_SYMBOL(mt_dcm_emi_off);
+EXPORT_SYMBOL(mt_dcm_disable);
+EXPORT_SYMBOL(mt_dcm_restore);
 
 
 #if defined(DCM_DEBUG_MON)
